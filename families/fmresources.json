@@ -1,0 +1,31 @@
+{
+	"name": "fmResources",
+	"plugin-id": "Sprite",
+	"sid": 187570073566025,
+	"instanceVariables": [
+		{
+			"name": "maxLife",
+			"type": "number",
+			"desc": "",
+			"sid": 848994211060589
+		},
+		{
+			"name": "curLife",
+			"type": "number",
+			"desc": "",
+			"sid": 566663203966359
+		},
+		{
+			"name": "dead",
+			"type": "boolean",
+			"desc": "",
+			"sid": 861342659293853
+		}
+	],
+	"behaviorTypes": [],
+	"effectTypes": [],
+	"members": [
+		"Tree1",
+		"Stone1"
+	]
+}

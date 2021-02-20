@@ -1,0 +1,1381 @@
+{
+	"name": "eGame",
+	"events": [
+		{
+			"eventType": "variable",
+			"name": "lastPlayerTileX",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 814929237308764
+		},
+		{
+			"eventType": "variable",
+			"name": "lastPlayerTileY",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 622692805624264
+		},
+		{
+			"eventType": "variable",
+			"name": "targetPlayerTileX",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 860779651171298
+		},
+		{
+			"eventType": "variable",
+			"name": "targetPlayerTileY",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 970761254416971
+		},
+		{
+			"eventType": "variable",
+			"name": "curPlayerUID",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 500459569636279
+		},
+		{
+			"eventType": "variable",
+			"name": "curEnemyUID",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 968802127724094
+		},
+		{
+			"eventType": "variable",
+			"name": "busy",
+			"type": "boolean",
+			"initialValue": "false",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 834356480119299
+		},
+		{
+			"eventType": "variable",
+			"name": "battleWaitTimer",
+			"type": "number",
+			"initialValue": "0.2",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 467795254455629
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Start",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-start-of-layout",
+							"objectClass": "System",
+							"sid": 519693472129874
+						}
+					],
+					"actions": [
+						{
+							"id": "map-function",
+							"objectClass": "Functions",
+							"sid": 846198235155968,
+							"parameters": {
+								"name": "\"interactiveObjects\"",
+								"string": "\"lightFire\"",
+								"function": "lightFire"
+							}
+						},
+						{
+							"id": "map-function",
+							"objectClass": "Functions",
+							"sid": 260395723050820,
+							"parameters": {
+								"name": "\"interactiveObjects\"",
+								"string": "\"moveCart\"",
+								"function": "moveCart"
+							}
+						}
+					],
+					"sid": 288695262554652
+				}
+			],
+			"sid": 483324094669702
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Player",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "Player colliding with enemy"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-overlapping-another-object",
+							"objectClass": "fmPlayers",
+							"sid": 947015936798933,
+							"parameters": {
+								"object": "fmEnemies"
+							}
+						},
+						{
+							"id": "is-boolean-instance-variable-set",
+							"objectClass": "fmPlayers",
+							"sid": 759813621672330,
+							"parameters": {
+								"instance-variable": "busy"
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 306359512177371,
+							"parameters": {
+								"variable": "lastPlayerTileX",
+								"value": "fmPlayers.TileMovement.GridX"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 893489481613296,
+							"parameters": {
+								"variable": "lastPlayerTileY",
+								"value": "fmPlayers.TileMovement.GridY"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 205117464923794,
+							"parameters": {
+								"variable": "targetPlayerTileX",
+								"value": "fmPlayers.TileMovement.GridTargetX"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 245795701959043,
+							"parameters": {
+								"variable": "targetPlayerTileY",
+								"value": "fmPlayers.TileMovement.GridTargetY"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 525298534882567,
+							"parameters": {
+								"variable": "curPlayerUID",
+								"value": "fmPlayers.UID"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 871070644040663,
+							"parameters": {
+								"variable": "curEnemyUID",
+								"value": "fmEnemies.UID"
+							}
+						},
+						{
+							"callFunction": "battle",
+							"sid": 342176970798617,
+							"parameters": [
+								"fmEnemies.UID"
+							]
+						}
+					],
+					"sid": 200958412100279
+				},
+				{
+					"eventType": "comment",
+					"text": "Player colliding with resource"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-overlapping-another-object",
+							"objectClass": "fmPlayers",
+							"sid": 555274685581076,
+							"parameters": {
+								"object": "fmResources"
+							}
+						},
+						{
+							"id": "is-boolean-instance-variable-set",
+							"objectClass": "fmPlayers",
+							"sid": 414021442858989,
+							"parameters": {
+								"instance-variable": "busy"
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 226377007698761,
+							"parameters": {
+								"variable": "lastPlayerTileX",
+								"value": "fmPlayers.TileMovement.GridX"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 915728839606803,
+							"parameters": {
+								"variable": "lastPlayerTileY",
+								"value": "fmPlayers.TileMovement.GridY"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 291034311866808,
+							"parameters": {
+								"variable": "targetPlayerTileX",
+								"value": "fmPlayers.TileMovement.GridTargetX"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 108190161855528,
+							"parameters": {
+								"variable": "targetPlayerTileY",
+								"value": "fmPlayers.TileMovement.GridTargetY"
+							}
+						},
+						{
+							"callFunction": "resourceHit",
+							"sid": 662085501026901,
+							"parameters": [
+								"fmResources.UID"
+							]
+						}
+					],
+					"sid": 163028747390241
+				},
+				{
+					"eventType": "comment",
+					"text": "Player interacting with object"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-key-pressed",
+							"objectClass": "Keyboard",
+							"sid": 542073183024876,
+							"parameters": {
+								"key": 13
+							}
+						}
+					],
+					"actions": [],
+					"sid": 853022041455304,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "is-overlapping-at-offset",
+									"objectClass": "fmPlayers",
+									"sid": 495541546859146,
+									"parameters": {
+										"object": "fmInteractiveObjects",
+										"offset-x": "8",
+										"offset-y": "0"
+									}
+								},
+								{
+									"id": "is-overlapping-at-offset",
+									"objectClass": "fmPlayers",
+									"sid": 717458281546923,
+									"parameters": {
+										"object": "fmInteractiveObjects",
+										"offset-x": "-8",
+										"offset-y": "0"
+									}
+								},
+								{
+									"id": "is-overlapping-at-offset",
+									"objectClass": "fmPlayers",
+									"sid": 842378507013431,
+									"parameters": {
+										"object": "fmInteractiveObjects",
+										"offset-x": "0",
+										"offset-y": "8"
+									}
+								},
+								{
+									"id": "is-overlapping-at-offset",
+									"objectClass": "fmPlayers",
+									"sid": 719003615542861,
+									"parameters": {
+										"object": "fmInteractiveObjects",
+										"offset-x": "0",
+										"offset-y": "-8"
+									}
+								}
+							],
+							"actions": [
+								{
+									"callFunction": "interactiveFunctions",
+									"sid": 377862921949731,
+									"parameters": [
+										"fmInteractiveObjects.UID",
+										"fmInteractiveObjects.callFunctionByName"
+									]
+								}
+							],
+							"sid": 327395296153912,
+							"isOrBlock": true
+						}
+					]
+				}
+			],
+			"sid": 869449877918463
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Debug",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "displays debug information in txtDebug"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "every-tick",
+							"objectClass": "System",
+							"sid": 512112847503228
+						}
+					],
+					"actions": [
+						{
+							"id": "set-text",
+							"objectClass": "txtDebug",
+							"sid": 686970660500372,
+							"parameters": {
+								"text": "\"lastPlayerTileX \" & lastPlayerTileX & newline & \"lastPlayerTileY \"& lastPlayerTileY & newline & \"targetPlayerTileX \"& targetPlayerTileX & newline & \"targetPlayerTileY \"& targetPlayerTileY "
+							}
+						}
+					],
+					"sid": 277169682411367,
+					"disabled": true
+				}
+			],
+			"sid": 152357671285410
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "enemies",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "function: player hits an resource?"
+				},
+				{
+					"functionName": "battle",
+					"functionDescription": "",
+					"functionCategory": "",
+					"functionReturnType": "none",
+					"functionIsAsync": false,
+					"functionParameters": [
+						{
+							"name": "enemyUID",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"sid": 730400846979325
+						}
+					],
+					"eventType": "function-block",
+					"conditions": [],
+					"actions": [
+						{
+							"id": "set-boolean-instvar",
+							"objectClass": "fmPlayers",
+							"sid": 194179158779494,
+							"parameters": {
+								"instance-variable": "busy",
+								"value": "true"
+							}
+						},
+						{
+							"callFunction": "playerAttack",
+							"sid": 934590798055312,
+							"parameters": [
+								"curEnemyUID"
+							]
+						},
+						{
+							"id": "wait-for-previous-actions",
+							"objectClass": "System",
+							"sid": 583171310150677
+						},
+						{
+							"callFunction": "enemyAttack",
+							"sid": 128944022697763,
+							"parameters": [
+								"curPlayerUID"
+							]
+						},
+						{
+							"id": "wait-for-previous-actions",
+							"objectClass": "System",
+							"sid": 796908295985117
+						},
+						{
+							"id": "set-boolean-instvar",
+							"objectClass": "fmPlayers",
+							"sid": 936350061915566,
+							"parameters": {
+								"instance-variable": "busy",
+								"value": "false"
+							}
+						}
+					],
+					"sid": 512290106492642
+				},
+				{
+					"functionName": "enemyAttack",
+					"functionDescription": "",
+					"functionCategory": "",
+					"functionReturnType": "none",
+					"functionIsAsync": true,
+					"functionParameters": [
+						{
+							"name": "playerUID",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"sid": 426453143114326
+						}
+					],
+					"eventType": "function-block",
+					"conditions": [],
+					"actions": [],
+					"sid": 419857847262327,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "pick-by-unique-id",
+									"objectClass": "fmPlayers",
+									"sid": 761562444128999,
+									"parameters": {
+										"unique-id": "playerUID"
+									}
+								}
+							],
+							"actions": [],
+							"sid": 187859898811620,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-instance-variable",
+											"objectClass": "fmEnemies",
+											"sid": 597634808066434,
+											"parameters": {
+												"instance-variable": "curLife",
+												"comparison": 4,
+												"value": "0"
+											}
+										},
+										{
+											"id": "is-boolean-instance-variable-set",
+											"objectClass": "fmPlayers",
+											"sid": 465159163656925,
+											"parameters": {
+												"instance-variable": "dead"
+											},
+											"isInverted": true
+										}
+									],
+									"actions": [
+										{
+											"id": "move-to-top",
+											"objectClass": "fmEnemies",
+											"sid": 949058583230190
+										},
+										{
+											"id": "set-instvar-value",
+											"objectClass": "fmPlayers",
+											"sid": 209130254922411,
+											"parameters": {
+												"instance-variable": "curLife",
+												"value": "Self.curLife - 5"
+											}
+										},
+										{
+											"id": "play",
+											"objectClass": "Audio",
+											"sid": 653471897218649,
+											"parameters": {
+												"audio-file": "drawKnife1",
+												"loop": "not-looping",
+												"volume": "0",
+												"tag-optional": "\"\""
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmEnemies",
+											"sid": 252649186276474,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "lastPlayerTileX",
+												"y": "lastPlayerTileY",
+												"instant": "animate"
+											}
+										},
+										{
+											"id": "wait",
+											"objectClass": "System",
+											"sid": 605644713045638,
+											"parameters": {
+												"seconds": "battleWaitTimer"
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmEnemies",
+											"sid": 440287506236896,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "targetPlayerTileX",
+												"y": "targetPlayerTileY",
+												"instant": "animate"
+											}
+										},
+										{
+											"id": "wait",
+											"objectClass": "System",
+											"sid": 300268037097436,
+											"parameters": {
+												"seconds": "battleWaitTimer"
+											}
+										}
+									],
+									"sid": 130297293424856
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-instance-variable",
+											"objectClass": "fmPlayers",
+											"sid": 936695024504676,
+											"parameters": {
+												"instance-variable": "curLife",
+												"comparison": 3,
+												"value": "0"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-animation-frame",
+											"objectClass": "fmPlayers",
+											"sid": 967686427773934,
+											"parameters": {
+												"frame-number": "1"
+											}
+										},
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmPlayers",
+											"sid": 420502277746212,
+											"parameters": {
+												"instance-variable": "dead",
+												"value": "true"
+											}
+										}
+									],
+									"sid": 178466638991360
+								}
+							]
+						}
+					]
+				},
+				{
+					"functionName": "playerAttack",
+					"functionDescription": "",
+					"functionCategory": "",
+					"functionReturnType": "none",
+					"functionIsAsync": true,
+					"functionParameters": [
+						{
+							"name": "enemyUID",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"sid": 627138246803942
+						}
+					],
+					"eventType": "function-block",
+					"conditions": [],
+					"actions": [],
+					"sid": 720799820997099,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [],
+							"actions": [],
+							"sid": 588589501214413
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "pick-by-unique-id",
+									"objectClass": "fmEnemies",
+									"sid": 220601096332212,
+									"parameters": {
+										"unique-id": "enemyUID"
+									}
+								}
+							],
+							"actions": [],
+							"sid": 848602616905662,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "is-boolean-instance-variable-set",
+											"objectClass": "fmEnemies",
+											"sid": 998127698721071,
+											"parameters": {
+												"instance-variable": "dead"
+											},
+											"isInverted": true
+										}
+									],
+									"actions": [
+										{
+											"id": "move-to-top",
+											"objectClass": "fmPlayers",
+											"sid": 555902373263104
+										},
+										{
+											"id": "set-instvar-value",
+											"objectClass": "fmEnemies",
+											"sid": 353313325591913,
+											"parameters": {
+												"instance-variable": "curLife",
+												"value": "Self.curLife - 5"
+											}
+										},
+										{
+											"id": "play",
+											"objectClass": "Audio",
+											"sid": 380421922621232,
+											"parameters": {
+												"audio-file": "drawKnife1",
+												"loop": "not-looping",
+												"volume": "0",
+												"tag-optional": "\"\""
+											}
+										},
+										{
+											"id": "set-ignoring-input",
+											"objectClass": "fmPlayers",
+											"sid": 744932221321559,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"input": "start-ignoring"
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmPlayers",
+											"sid": 802697336981092,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "targetPlayerTileX",
+												"y": "targetPlayerTileY",
+												"instant": "animate"
+											}
+										},
+										{
+											"id": "wait",
+											"objectClass": "System",
+											"sid": 754872523306710,
+											"parameters": {
+												"seconds": "battleWaitTimer"
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmPlayers",
+											"sid": 626759594294033,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "lastPlayerTileX",
+												"y": "lastPlayerTileY",
+												"instant": "animate"
+											}
+										},
+										{
+											"id": "wait",
+											"objectClass": "System",
+											"sid": 754156343084463,
+											"parameters": {
+												"seconds": "battleWaitTimer"
+											}
+										},
+										{
+											"id": "set-ignoring-input",
+											"objectClass": "fmPlayers",
+											"sid": 470017787445765,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"input": "stop-ignoring"
+											}
+										}
+									],
+									"sid": 671855115716544
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "is-boolean-instance-variable-set",
+											"objectClass": "fmEnemies",
+											"sid": 527320007361309,
+											"parameters": {
+												"instance-variable": "dead"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "destroy",
+											"objectClass": "fmEnemies",
+											"sid": 435292247323770
+										}
+									],
+									"sid": 351128244679797
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-instance-variable",
+											"objectClass": "fmEnemies",
+											"sid": 983976068124555,
+											"parameters": {
+												"instance-variable": "curLife",
+												"comparison": 3,
+												"value": "0"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-animation-frame",
+											"objectClass": "fmEnemies",
+											"sid": 787569394771016,
+											"parameters": {
+												"frame-number": "1"
+											}
+										},
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmEnemies",
+											"sid": 707047796531304,
+											"parameters": {
+												"instance-variable": "dead",
+												"value": "true"
+											}
+										}
+									],
+									"sid": 920988455172938
+								}
+							]
+						}
+					]
+				}
+			],
+			"sid": 705877033614102
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "resources",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "function: player hits an resource?"
+				},
+				{
+					"functionName": "resourceHit",
+					"functionDescription": "",
+					"functionCategory": "",
+					"functionReturnType": "none",
+					"functionIsAsync": false,
+					"functionParameters": [
+						{
+							"name": "objectUID",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"sid": 991091785748164
+						}
+					],
+					"eventType": "function-block",
+					"conditions": [],
+					"actions": [],
+					"sid": 653075889705537,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "pick-by-unique-id",
+									"objectClass": "fmResources",
+									"sid": 996737805353148,
+									"parameters": {
+										"unique-id": "objectUID"
+									}
+								}
+							],
+							"actions": [],
+							"sid": 438216965559239,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "is-boolean-instance-variable-set",
+											"objectClass": "fmResources",
+											"sid": 683565453310321,
+											"parameters": {
+												"instance-variable": "dead"
+											},
+											"isInverted": true
+										}
+									],
+									"actions": [
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmPlayers",
+											"sid": 142330212833876,
+											"parameters": {
+												"instance-variable": "busy",
+												"value": "true"
+											}
+										},
+										{
+											"id": "move-to-top",
+											"objectClass": "fmPlayers",
+											"sid": 180171940146136
+										},
+										{
+											"id": "set-instvar-value",
+											"objectClass": "fmResources",
+											"sid": 438649007026567,
+											"parameters": {
+												"instance-variable": "curLife",
+												"value": "Self.curLife - 5"
+											}
+										},
+										{
+											"id": "play",
+											"objectClass": "Audio",
+											"sid": 774836099638763,
+											"parameters": {
+												"audio-file": "drawKnife1",
+												"loop": "not-looping",
+												"volume": "0",
+												"tag-optional": "\"\""
+											}
+										},
+										{
+											"id": "set-ignoring-input",
+											"objectClass": "fmPlayers",
+											"sid": 160485529529337,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"input": "start-ignoring"
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmPlayers",
+											"sid": 585482654184643,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "targetPlayerTileX",
+												"y": "targetPlayerTileY",
+												"instant": "animate"
+											}
+										},
+										{
+											"id": "wait",
+											"objectClass": "System",
+											"sid": 887422057998151,
+											"parameters": {
+												"seconds": "battleWaitTimer"
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmPlayers",
+											"sid": 284992477100577,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "lastPlayerTileX",
+												"y": "lastPlayerTileY",
+												"instant": "animate"
+											}
+										},
+										{
+											"id": "wait",
+											"objectClass": "System",
+											"sid": 867208655654278,
+											"parameters": {
+												"seconds": "battleWaitTimer"
+											}
+										},
+										{
+											"id": "set-ignoring-input",
+											"objectClass": "fmPlayers",
+											"sid": 495952321375908,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"input": "stop-ignoring"
+											}
+										},
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmPlayers",
+											"sid": 914091749340660,
+											"parameters": {
+												"instance-variable": "busy",
+												"value": "false"
+											}
+										}
+									],
+									"sid": 410976439973116
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "is-boolean-instance-variable-set",
+											"objectClass": "fmResources",
+											"sid": 939005521380132,
+											"parameters": {
+												"instance-variable": "dead"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "destroy",
+											"objectClass": "fmResources",
+											"sid": 929108591691259
+										}
+									],
+									"sid": 815648500868049
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-instance-variable",
+											"objectClass": "fmResources",
+											"sid": 142037290728428,
+											"parameters": {
+												"instance-variable": "curLife",
+												"comparison": 3,
+												"value": "0"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-animation-frame",
+											"objectClass": "fmResources",
+											"sid": 542870193013408,
+											"parameters": {
+												"frame-number": "1"
+											}
+										},
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmResources",
+											"sid": 646447218704997,
+											"parameters": {
+												"instance-variable": "dead",
+												"value": "true"
+											}
+										}
+									],
+									"sid": 714461565361634
+								}
+							]
+						}
+					]
+				}
+			],
+			"sid": 199656931365774
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "interactiveObjects",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "entry function to call interactiveObject functions based on target"
+				},
+				{
+					"functionName": "interactiveFunctions",
+					"functionDescription": "",
+					"functionCategory": "",
+					"functionReturnType": "none",
+					"functionIsAsync": false,
+					"functionParameters": [
+						{
+							"name": "objectUID",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"sid": 435653901194880
+						},
+						{
+							"name": "callFunctionName",
+							"type": "string",
+							"initialValue": "",
+							"comment": "",
+							"sid": 139910160265617
+						}
+					],
+					"eventType": "function-block",
+					"conditions": [],
+					"actions": [
+						{
+							"id": "call-mapped-function",
+							"objectClass": "Functions",
+							"sid": 243337582415336,
+							"parameters": {
+								"name": "\"interactiveObjects\"",
+								"string": "callFunctionName",
+								"forward-params": "0"
+							}
+						}
+					],
+					"sid": 793720866142477
+				},
+				{
+					"eventType": "comment",
+					"text": "function call for FIRE"
+				},
+				{
+					"functionName": "lightFire",
+					"functionDescription": "",
+					"functionCategory": "",
+					"functionReturnType": "none",
+					"functionIsAsync": false,
+					"functionParameters": [
+						{
+							"name": "objectUID",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"sid": 230688017832584
+						}
+					],
+					"eventType": "function-block",
+					"conditions": [],
+					"actions": [],
+					"sid": 955589703963999,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "pick-by-unique-id",
+									"objectClass": "fmInteractiveObjects",
+									"sid": 580768370708294,
+									"parameters": {
+										"unique-id": "objectUID"
+									}
+								}
+							],
+							"actions": [],
+							"sid": 199441529939626,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "is-boolean-instance-variable-set",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 908616445361495,
+											"parameters": {
+												"instance-variable": "isActive"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-animation",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 284715965361735,
+											"parameters": {
+												"animation": "\"out\"",
+												"from": "beginning"
+											}
+										},
+										{
+											"id": "stop",
+											"objectClass": "Audio",
+											"sid": 137673205630490,
+											"parameters": {
+												"tag": "\"fire\" & objectUID"
+											}
+										},
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 610494391344301,
+											"parameters": {
+												"instance-variable": "isActive",
+												"value": "false"
+											}
+										}
+									],
+									"sid": 591963537142430
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "else",
+											"objectClass": "System",
+											"sid": 663710549104607
+										}
+									],
+									"actions": [
+										{
+											"id": "set-animation",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 276955992507396,
+											"parameters": {
+												"animation": "\"burning\"",
+												"from": "beginning"
+											}
+										},
+										{
+											"id": "play",
+											"objectClass": "Audio",
+											"sid": 895653420906286,
+											"parameters": {
+												"audio-file": "campfire",
+												"loop": "looping",
+												"volume": "-10",
+												"tag-optional": "\"fire\"&objectUID"
+											}
+										},
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 628648802499011,
+											"parameters": {
+												"instance-variable": "isActive",
+												"value": "true"
+											}
+										}
+									],
+									"sid": 894103035118556
+								}
+							]
+						}
+					]
+				},
+				{
+					"eventType": "comment",
+					"text": "function call for CART"
+				},
+				{
+					"functionName": "moveCart",
+					"functionDescription": "",
+					"functionCategory": "",
+					"functionReturnType": "none",
+					"functionIsAsync": false,
+					"functionParameters": [
+						{
+							"name": "objectUID",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"sid": 685603259729546
+						}
+					],
+					"eventType": "function-block",
+					"conditions": [],
+					"actions": [],
+					"sid": 764057586273100,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "pick-by-unique-id",
+									"objectClass": "fmInteractiveObjects",
+									"sid": 743394112122633,
+									"parameters": {
+										"unique-id": "objectUID"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-enabled",
+									"objectClass": "fmInteractiveObjects",
+									"sid": 173673111995806,
+									"behaviorType": "TileMovement",
+									"parameters": {
+										"state": "enabled"
+									}
+								}
+							],
+							"sid": 860994514568840,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "is-boolean-instance-variable-set",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 752797425531482,
+											"parameters": {
+												"instance-variable": "isActive"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 156564688436179,
+											"parameters": {
+												"instance-variable": "isActive",
+												"value": "false"
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 416857022490631,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "Self.TileMovement.GridX -5",
+												"y": "Self.TileMovement.GridY",
+												"instant": "animate"
+											}
+										}
+									],
+									"sid": 837148220850822
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "else",
+											"objectClass": "System",
+											"sid": 172685922523857
+										}
+									],
+									"actions": [
+										{
+											"id": "set-boolean-instvar",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 571944955505894,
+											"parameters": {
+												"instance-variable": "isActive",
+												"value": "true"
+											}
+										},
+										{
+											"id": "set-grid-position",
+											"objectClass": "fmInteractiveObjects",
+											"sid": 720104034021487,
+											"behaviorType": "TileMovement",
+											"parameters": {
+												"x": "Self.TileMovement.GridX + 5",
+												"y": "Self.TileMovement.GridY",
+												"instant": "animate"
+											}
+										}
+									],
+									"sid": 873697571563501
+								}
+							]
+						}
+					]
+				}
+			],
+			"sid": 802163116078117
+		}
+	],
+	"sid": 588941000846029
+}

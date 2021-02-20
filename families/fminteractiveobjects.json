@@ -1,0 +1,36 @@
+{
+	"name": "fmInteractiveObjects",
+	"plugin-id": "Sprite",
+	"sid": 129132056485220,
+	"instanceVariables": [
+		{
+			"name": "isActive",
+			"type": "boolean",
+			"desc": "",
+			"sid": 792577552890122
+		},
+		{
+			"name": "callFunctionByName",
+			"type": "string",
+			"desc": "",
+			"sid": 289572578703673
+		}
+	],
+	"behaviorTypes": [
+		{
+			"behaviorId": "solid",
+			"name": "Solid",
+			"sid": 774309343165710
+		},
+		{
+			"behaviorId": "TileMovement",
+			"name": "TileMovement",
+			"sid": 955223383724990
+		}
+	],
+	"effectTypes": [],
+	"members": [
+		"fire",
+		"cart"
+	]
+}

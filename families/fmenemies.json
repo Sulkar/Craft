@@ -1,0 +1,36 @@
+{
+	"name": "fmEnemies",
+	"plugin-id": "Sprite",
+	"sid": 339024249339009,
+	"instanceVariables": [
+		{
+			"name": "curLife",
+			"type": "number",
+			"desc": "",
+			"sid": 308984593114104
+		},
+		{
+			"name": "maxLife",
+			"type": "number",
+			"desc": "",
+			"sid": 793903709314947
+		},
+		{
+			"name": "dead",
+			"type": "boolean",
+			"desc": "",
+			"sid": 482375716933821
+		}
+	],
+	"behaviorTypes": [
+		{
+			"behaviorId": "TileMovement",
+			"name": "TileMovement",
+			"sid": 568460878432354
+		}
+	],
+	"effectTypes": [],
+	"members": [
+		"enemy1"
+	]
+}

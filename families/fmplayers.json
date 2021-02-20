@@ -1,0 +1,48 @@
+{
+	"name": "fmPlayers",
+	"plugin-id": "Sprite",
+	"sid": 143742079431479,
+	"instanceVariables": [
+		{
+			"name": "dmg",
+			"type": "number",
+			"desc": "",
+			"sid": 758074447375383
+		},
+		{
+			"name": "curLife",
+			"type": "number",
+			"desc": "",
+			"sid": 839655938590173
+		},
+		{
+			"name": "maxLife",
+			"type": "number",
+			"desc": "",
+			"sid": 212984891562093
+		},
+		{
+			"name": "dead",
+			"type": "boolean",
+			"desc": "",
+			"sid": 623352518980592
+		},
+		{
+			"name": "busy",
+			"type": "boolean",
+			"desc": "",
+			"sid": 894241126770578
+		}
+	],
+	"behaviorTypes": [
+		{
+			"behaviorId": "TileMovement",
+			"name": "TileMovement",
+			"sid": 541204935558487
+		}
+	],
+	"effectTypes": [],
+	"members": [
+		"Player1"
+	]
+}
